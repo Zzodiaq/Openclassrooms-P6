@@ -52,6 +52,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -93,6 +94,12 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 li:hover {
@@ -186,3 +193,77 @@ footer nav ul {
 	margin: 2em
 }
 
+.filtres {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 1rem;
+	margin-bottom: 3rem;
+}
+
+.filtres button {
+	padding: 0.4rem 1.5rem;
+	border-radius: 15px;
+	background-color: white;
+	border: #1D6154 2px solid;
+	color: #1D6154;
+	cursor: pointer;
+	font-family: 'Syne';
+	font-weight: 700;
+}
+
+.filtres button:focus {
+	background-color: #1D6154;
+	color: white;
+}
+
+/* ------------------------------------------log in------------------------------------------------------ */
+
+#login {
+	width: 50%;
+	margin: auto;
+}
+#login > * {
+	text-align: center;
+
+}
+#login h2{
+	margin-bottom: 20px;
+}
+#login form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#login label {
+	margin: 2em 0 1em 0;
+}
+#login textarea {
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#login a{
+	margin: auto;
+	text-decoration: underline;
+}
+
+#footer-login {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: end;
+}
+
+#footer-login li {
+	margin: 1.5rem 12rem;
+}
