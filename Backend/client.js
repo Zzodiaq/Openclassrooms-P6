@@ -2,13 +2,71 @@ const tous = document.getElementById("tous");
 const objet = document.getElementById("objets");
 const appart = document.getElementById("appartements");
 const hotel = document.getElementById("hotel");
+const log = document.getElementById("log-btn");
+const figures = document.querySelectorAll('.gallery figure');
+const figuresPopUp = document.querySelectorAll('#modale-popUp figure');
+const log_form = document.getElementById("log-form");
+const errorPassword = document.getElementById("error-password");
+const modale = document.getElementById("modale");
+const modifier = document.querySelector(".container-btn-modifier span");
+const filtres = document.getElementById("filtres");
+const modalePopUp = document.getElementById("modale-popUp");
+const btn = document.querySelectorAll(".btn")
+const xmark = document.getElementById("xmar")
+let loginNavBtn = document.getElementById("login-nav-btn");
+let token = [];
 let obj = [];
 let app = [];
 let hot = [];
+const user = localStorage.getItem("user");
+if (user){
+  loginNavBtn.innerHTML = "logout";
+  modale.style.display = "flex";
+  modifier.style.display = "flex";
+  modifier.style.marginTop = "5rem";
+  modifier.style.marginBottom = "5rem";
+  filtres.style.display = "none"
+  document.querySelector("header").style.marginTop = "6rem";
+  document.querySelector("#introduction figcaption").style.display = "flex";
+  btn.forEach((bouton) => {
+    bouton.addEventListener("click", () => {
+      modalePopUp.style.display = "flex";
+      fetch('http://localhost:5678/api/works')
+      .then(response => response.json())
+      .then(data => {
+      for (let i = 0; i < figuresPopUp.length; i++) {
+        const figure = figuresPopUp[i];
+        for (let j = 0; j < figure.children.length; j++) {
+          const child = figure.children[j];
+          if(child.tagName === 'IMG'){
+            child.src = data[i].imageUrl;
+            child.alt = data[i].title; 
+          }else if (child.tagName === 'FIGCAPTION'){
+            child.innerHTML = 'éditer';
+          }
+        }
+      }
+    })
+    })
+  })
+  xmark.addEventListener("click", () => {
+    modalePopUp.style.display = "none";
+  })
+  modalePopUp.addEventListener("click", () => {
+    if (event.target === modalePopUp){
+      modalePopUp.style.display = "none"
+    }
+  })
+}
+loginNavBtn.addEventListener("click", () => {
+  const user = localStorage.getItem("user");
+  if(user){
+    localStorage.removeItem("user");
+  }
+})
 fetch('http://localhost:5678/api/works')
   .then(response => response.json())
   .then(data => {
-    console.log(data)
     for(let h = 0; h < data.length; h++){
       let name = (data[h].category.name);
       if (name === "Objets"){
@@ -19,14 +77,13 @@ fetch('http://localhost:5678/api/works')
         hot.push(data[h]);
       }
     }
-    const figures = document.querySelectorAll('.gallery figure');
     for (let i = 0; i < figures.length; i++) {
       const figure = figures[i];
       for (let j = 0; j < figure.children.length; j++) {
         const child = figure.children[j];
         if(child.tagName === 'IMG'){
           child.src = data[i].imageUrl;
-          child.alt = data[i].title;
+          child.alt = data[i].title; 
         }else{
           child.innerHTML = data[i].title;
         }
@@ -109,3 +166,38 @@ fetch('http://localhost:5678/api/works')
   }
   })
   .catch(error => console.error(error))
+
+log_form.addEventListener('submit', () => {
+  event.preventDefault();
+  const mdp = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+
+  let user = {
+    email: email,
+    password: mdp
+  };
+  
+  fetch('http://localhost:5678/api/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(user)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.userId){
+      console.log(data)
+      localStorage.setItem("user", {
+        userId : data.userId,
+        token : data.token
+      });
+      window.location.href = "../FrontEnd/index.html";
+    }else {
+      errorPassword.innerHTML = "Votre identifiant ou votre mot de passe est incorrect. Veuillez réessayer.";
+    }
+  })
+  .catch(function(error){
+    console.log(error)
+  })
+})
