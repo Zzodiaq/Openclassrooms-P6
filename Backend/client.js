@@ -11,10 +11,10 @@ const modale = document.getElementById("modale");
 const modifier = document.querySelector(".container-btn-modifier span");
 const filtres = document.getElementById("filtres");
 const modalePopUp = document.getElementById("modale-popUp");
-const btn = document.querySelectorAll(".btn")
-const xmark = document.getElementById("xmar")
+const btn = document.querySelectorAll(".btn");
+const xmark = document.getElementById("xmar");
+const trash = document.querySelectorAll(".trash");
 let loginNavBtn = document.getElementById("login-nav-btn");
-let token = [];
 let obj = [];
 let app = [];
 let hot = [];
@@ -34,11 +34,13 @@ if (user){
       fetch('http://localhost:5678/api/works')
       .then(response => response.json())
       .then(data => {
+        console.log(data)
       for (let i = 0; i < figuresPopUp.length; i++) {
         const figure = figuresPopUp[i];
         for (let j = 0; j < figure.children.length; j++) {
           const child = figure.children[j];
           if(child.tagName === 'IMG'){
+            console.log(data[i].imageUrl)
             child.src = data[i].imageUrl;
             child.alt = data[i].title; 
           }else if (child.tagName === 'FIGCAPTION'){
@@ -56,6 +58,28 @@ if (user){
     if (event.target === modalePopUp){
       modalePopUp.style.display = "none"
     }
+  })
+  trash.forEach((div, index) => {
+    const workId = index;
+    div.addEventListener("click", () => {
+      const userDataSrting = localStorage.getItem("user");
+      const userData = JSON.parse(userDataSrting)
+      console.log(userData.token)
+      // fetch('http://localhost:5678/api/works/' + workId, {
+      //   method : "DELETE",
+      //   headers : {
+      //     'Authorization' : userData.token
+      //   }
+      // })
+      // .then (response => {
+      //   if(response.ok){
+      //     alert("travail supprimé");
+      //   }
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      // })
+    })
   })
 }
 loginNavBtn.addEventListener("click", () => {
@@ -187,11 +211,9 @@ log_form.addEventListener('submit', () => {
   .then(response => response.json())
   .then(data => {
     if (data.userId){
-      console.log(data)
-      localStorage.setItem("user", {
-        userId : data.userId,
+      localStorage.setItem("user", JSON.stringify({
         token : data.token
-      });
+      }));
       window.location.href = "../FrontEnd/index.html";
     }else {
       errorPassword.innerHTML = "Votre identifiant ou votre mot de passe est incorrect. Veuillez réessayer.";

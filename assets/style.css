@@ -437,6 +437,7 @@ footer nav ul {
 	top: 5px;
 	right: 5px;
 	border-radius: 5px;
+	cursor: pointer;
 }
 
 .move {
@@ -450,4 +451,5 @@ footer nav ul {
 	top: 5px;
 	right: 40px;
 	border-radius: 5px;
+	cursor: pointer;
 }
