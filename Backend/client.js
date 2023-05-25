@@ -214,7 +214,7 @@ log_form.addEventListener('submit', () => {
       localStorage.setItem("user", JSON.stringify({
         token : data.token
       }));
-      window.location.href = "../FrontEnd/index.html";
+      window.location.href = "../index.html";
     }else {
       errorPassword.innerHTML = "Votre identifiant ou votre mot de passe est incorrect. Veuillez réessayer.";
     }
