@@ -12,10 +12,14 @@ const modale = document.getElementById("modale");
 const modifier = document.querySelector(".container-btn-modifier span");
 const filtres = document.getElementById("filtres");
 const modalePopUp = document.getElementById("modale-popUp");
+const popUp = document.getElementById("popUp");
+const popUpAjout = document.getElementById("popUp-ajout");
 const btn = document.querySelectorAll(".btn");
 const xmark = document.getElementById("xmar");
-const trash = document.querySelectorAll(".trash");
+const xmark2 = document.getElementById("xmar2");
 const photoEdit = document.querySelector(".photo-edit");
+const addPhoto = document.getElementById("ajout-photo");
+const leftArrow = document.getElementById("left-arrow");
 let loginNavBtn = document.getElementById("login-nav-btn");
 let obj = [];
 let app = [];
@@ -37,7 +41,6 @@ if (user){
       fetch('http://localhost:5678/api/works')
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         for (let i = 0; i < data.length; i++) {
             if(i === 0){
               var divMove = document.createElement('div');
@@ -47,6 +50,7 @@ if (user){
               iMove.style.color = '#ffffff';
               var figure = document.createElement('figure');
               var divTrash = document.createElement('div');
+              divTrash.setAttribute('data-value', data[i].id);
               divTrash.classList.add('trash');
               var iTrash = document.createElement('i');
               iTrash.classList.add('fa-solid', 'fa-trash-can', 'fa-sm');
@@ -64,6 +68,7 @@ if (user){
             }else {
               var figure = document.createElement('figure');
               var divTrash = document.createElement('div');
+              divTrash.setAttribute('data-value', data[i].id);
               divTrash.classList.add('trash');
               var iTrash = document.createElement('i');
               iTrash.classList.add('fa-solid', 'fa-trash-can', 'fa-sm');
@@ -78,38 +83,52 @@ if (user){
               photoEdit.appendChild(figure);
             }
         }
-    })
+        const trash = document.querySelectorAll(".trash");
+        trash.forEach((div) => {
+          div.addEventListener("click", () => {
+            event.preventDefault();
+            const workId = div.getAttribute('data-value');
+            const userDataSrting = localStorage.getItem("user");
+            const userData = JSON.parse(userDataSrting)
+            console.log(userData.token)
+            fetch('http://localhost:5678/api/works/' + workId, {
+              method : "DELETE",
+              headers : {
+                'Authorization' : 'Bearer ' + userData.token
+              }
+            })
+            .then (response => {
+              if(response.ok){
+                console.log(response)
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
+            return false;
+          })
+        })
+      })
     })
   })
   xmark.addEventListener("click", () => {
     modalePopUp.style.display = "none";
+  })
+  xmark2.addEventListener("click", () => {
+    modalePopUp.style.display = "none";
+  })
+  leftArrow.addEventListener("click", () => {
+    popUpAjout.style.display = "none";
+    popUp.style.display = "flex";
   })
   modalePopUp.addEventListener("click", () => {
     if (event.target === modalePopUp){
       modalePopUp.style.display = "none"
     }
   })
-  trash.forEach((div, index) => {
-    const workId = index;
-    div.addEventListener("click", () => {
-      const userDataSrting = localStorage.getItem("user");
-      const userData = JSON.parse(userDataSrting)
-      console.log(userData.token)
-      fetch('http://localhost:5678/api/works/' + workId, {
-        method : "DELETE",
-        headers : {
-          'Authorization' : 'Bearer' + userData.token
-        }
-      })
-      .then (response => {
-        if(response.ok){
-          alert("travail supprimé");
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    })
+  addPhoto.addEventListener("click", () => {
+    popUpAjout.style.display = "flex";
+    popUp.style.display = "none";
   })
 }
 loginNavBtn.addEventListener("click", () => {

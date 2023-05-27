@@ -359,7 +359,7 @@ footer nav ul {
 	background-color: rgba(0, 0, 0, 0.6);
 }
 
-.popUp {
+#popUp {
 	position: relative;
 	background-color: white;
 	border-radius: 15px;
@@ -374,15 +374,15 @@ footer nav ul {
 	padding: 4rem;
 }
 
-.popUp figure {
+#popUp figure {
 	position: relative;
 }
 
-.popUp h2 {
+#popUp h2 {
 	color: black;
 }
 
-.popUp img {
+#popUp img {
 	width: 100px;
 	height: 150px;
 	object-fit: cover;
@@ -452,4 +452,28 @@ footer nav ul {
 	right: 40px;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+/* ---------------------------------------- ajout ------------------------------------------------------------------------ */
+
+#popUp-ajout {
+	position: relative;
+	background-color: white;
+	border-radius: 15px;
+	height: 82vh; /* Hauteur souhaitée pour la div popUp */
+	width: 35%; /* Largeur souhaitée pour la div popUp */
+	max-width: 800px; /* Largeur maximale pour la div popUp */
+	max-height: 90%; /* Hauteur maximale pour la div popUp */
+	overflow: auto; /* Ajouter une barre de défilement si le contenu dépasse */
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	padding: 4rem;
+}
+
+#left-arrow {
+	cursor: pointer;
+	position: absolute;
+	top: 3rem;
+	left: 3rem;
 }
