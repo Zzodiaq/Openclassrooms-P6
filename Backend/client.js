@@ -4,6 +4,7 @@ const appart = document.getElementById("appartements");
 const hotel = document.getElementById("hotel");
 const log = document.getElementById("log-btn");
 const figures = document.querySelectorAll('.gallery figure');
+const gallery = document.querySelector('.gallery');
 const figuresPopUp = document.querySelectorAll('#modale-popUp figure');
 const log_form = document.getElementById("log-form");
 const errorPassword = document.getElementById("error-password");
@@ -14,6 +15,7 @@ const modalePopUp = document.getElementById("modale-popUp");
 const btn = document.querySelectorAll(".btn");
 const xmark = document.getElementById("xmar");
 const trash = document.querySelectorAll(".trash");
+const photoEdit = document.querySelector(".photo-edit");
 let loginNavBtn = document.getElementById("login-nav-btn");
 let obj = [];
 let app = [];
@@ -30,24 +32,52 @@ if (user){
   document.querySelector("#introduction figcaption").style.display = "flex";
   btn.forEach((bouton) => {
     bouton.addEventListener("click", () => {
+      empty2()
       modalePopUp.style.display = "flex";
       fetch('http://localhost:5678/api/works')
       .then(response => response.json())
       .then(data => {
         console.log(data)
-      for (let i = 0; i < figuresPopUp.length; i++) {
-        const figure = figuresPopUp[i];
-        for (let j = 0; j < figure.children.length; j++) {
-          const child = figure.children[j];
-          if(child.tagName === 'IMG'){
-            console.log(data[i].imageUrl)
-            child.src = data[i].imageUrl;
-            child.alt = data[i].title; 
-          }else if (child.tagName === 'FIGCAPTION'){
-            child.innerHTML = 'éditer';
-          }
+        for (let i = 0; i < data.length; i++) {
+            if(i === 0){
+              var divMove = document.createElement('div');
+              divMove.classList.add('move');
+              var iMove = document.createElement('i');
+              iMove.classList.add('fa-solid', 'fa-arrows-up-down-left-right', 'fa-sm');
+              iMove.style.color = '#ffffff';
+              var figure = document.createElement('figure');
+              var divTrash = document.createElement('div');
+              divTrash.classList.add('trash');
+              var iTrash = document.createElement('i');
+              iTrash.classList.add('fa-solid', 'fa-trash-can', 'fa-sm');
+              var img = document.createElement('img');
+              img.setAttribute('src', data[i].imageUrl);
+              img.setAttribute('alt', data[i].title);
+              var figcaption = document.createElement('figcaption');
+              divTrash.appendChild(iTrash);
+              figure.appendChild(divTrash);
+              figure.appendChild(img);
+              figure.appendChild(figcaption);
+              divMove.appendChild(iMove);
+              figure.appendChild(divMove);
+              photoEdit.appendChild(figure);
+            }else {
+              var figure = document.createElement('figure');
+              var divTrash = document.createElement('div');
+              divTrash.classList.add('trash');
+              var iTrash = document.createElement('i');
+              iTrash.classList.add('fa-solid', 'fa-trash-can', 'fa-sm');
+              var img = document.createElement('img');
+              img.setAttribute('src', data[i].imageUrl);
+              img.setAttribute('alt', data[i].title);
+              var figcaption = document.createElement('figcaption');
+              divTrash.appendChild(iTrash);
+              figure.appendChild(divTrash);
+              figure.appendChild(img);
+              figure.appendChild(figcaption);
+              photoEdit.appendChild(figure);
+            }
         }
-      }
     })
     })
   })
@@ -65,20 +95,20 @@ if (user){
       const userDataSrting = localStorage.getItem("user");
       const userData = JSON.parse(userDataSrting)
       console.log(userData.token)
-      // fetch('http://localhost:5678/api/works/' + workId, {
-      //   method : "DELETE",
-      //   headers : {
-      //     'Authorization' : userData.token
-      //   }
-      // })
-      // .then (response => {
-      //   if(response.ok){
-      //     alert("travail supprimé");
-      //   }
-      // })
-      // .catch(error => {
-      //   console.log(error)
-      // })
+      fetch('http://localhost:5678/api/works/' + workId, {
+        method : "DELETE",
+        headers : {
+          'Authorization' : 'Bearer' + userData.token
+        }
+      })
+      .then (response => {
+        if(response.ok){
+          alert("travail supprimé");
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
     })
   })
 }
@@ -101,91 +131,43 @@ fetch('http://localhost:5678/api/works')
         hot.push(data[h]);
       }
     }
-    for (let i = 0; i < figures.length; i++) {
-      const figure = figures[i];
-      for (let j = 0; j < figure.children.length; j++) {
-        const child = figure.children[j];
-        if(child.tagName === 'IMG'){
-          child.src = data[i].imageUrl;
-          child.alt = data[i].title; 
-        }else{
-          child.innerHTML = data[i].title;
-        }
-      }
-    }
+    create(data)
+
   tous.addEventListener("click", () => {
-    for (let i = 0; i < figures.length; i++) {
-      const figure = figures[i];
-      for (let j = 0; j < figure.children.length; j++) {
-        const child = figure.children[j];
-        if(child.tagName === 'IMG'){
-          child.src = data[i].imageUrl;
-          child.alt = data[i].title;
-        }else{
-          child.innerHTML = data[i].title;
-        }
-      }
-    }
+    empty()
+    create(data)
   })
   objet.addEventListener("click", () => {
     empty()
-    for (let i = 0; i < obj.length; i++) {
-      const figure = figures[i];
-      for (let j = 0; j < figure.children.length; j++) {
-        const child = figure.children[j];
-        if(child.tagName === 'IMG'){
-          child.src = obj[i].imageUrl;
-          child.alt = obj[i].title;
-        }else{
-          child.innerHTML = obj[i].title;
-        }
-      }
-    }
+    create(obj)
   })
   appart.addEventListener("click", () => {
     empty()
-    for (let i = 0; i < app.length; i++) {
-      const figure = figures[i];
-      for (let j = 0; j < figure.children.length; j++) {
-        const child = figure.children[j];
-        if(child.tagName === 'IMG'){
-          child.src = app[i].imageUrl;
-          child.alt = app[i].title;
-        }else{
-          child.innerHTML = app[i].title;
-        }
-      }
-    }
+    create(app)
   })
   hotel.addEventListener("click", () => {
     empty()
-    for (let i = 0; i < hot.length; i++) {
-      const figure = figures[i];
-      for (let j = 0; j < figure.children.length; j++) {
-        const child = figure.children[j];
-        if(child.tagName === 'IMG'){
-          child.src = hot[i].imageUrl;
-          child.alt = hot[i].title;
-        }else{
-          child.innerHTML = hot[i].title;
-        }
-      }
-    }
+    create(hot)
   })
 
 
   function empty() {
-    for (let i = 0; i < figures.length; i++) {
-      const figure = figures[i];
-      for (let j = 0; j < figure.children.length; j++) {
-        const child = figure.children[j];
-        if(child.tagName === 'IMG'){
-          child.src = "";
-          child.alt = "";
-        }else{
-          child.innerHTML = "";
-        }
-      }
+    while(gallery.firstChild){
+      gallery.removeChild(gallery.firstChild)
+    }
+  }
+
+  function create(array){
+    for (let i = 0; i < array.length; i++) {
+      var figure = document.createElement('figure');
+      var img = document.createElement('img');
+      img.setAttribute('src', array[i].imageUrl);
+      img.setAttribute('alt', array[i].title);
+      var figcaption = document.createElement('figcaption');
+      figcaption.textContent = array[i].title;
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+      gallery.appendChild(figure);
     }
   }
   })
@@ -223,3 +205,9 @@ log_form.addEventListener('submit', () => {
     console.log(error)
   })
 })
+
+function empty2() {
+  while(photoEdit.firstChild){
+    photoEdit.removeChild(photoEdit.firstChild)
+  }
+}
