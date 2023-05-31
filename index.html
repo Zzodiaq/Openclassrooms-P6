@@ -27,8 +27,31 @@
 			<i id="left-arrow" class="fa fa-2xl fa-light fa-arrow-left"></i>
 			<i id="xmar2" class="fa-sharp fa-solid fa-xmark fa-2xl"></i>
 			<h2>Ajout photo</h2>
-			<div class="dash"></div>
-			<button id="valider">Valider</button>
+			<form action="#"  name="formFile" enctype="multipart/form-data" method="post" id="upload-form">
+				<div class="upload">
+					<i class="fa-regular fa-image fa-8x"></i>
+					<span id="file-btn">
+						<p>+ Ajouter photo</p>
+						<input id="file" name="file" type="file" >
+					</span>
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<div class="title">
+					<h3>Titre</h3>
+					<input id="ajout-title" name="titre" type="text" required>
+				</div>
+				<div class="catego">
+					<h3>Catégorie</h3>
+					<select id="categorie" name="cate" required>
+						<option></option>
+						<option value="Option 1">Bar & Restaurant</option>
+						<option value="Option 2">Appartements</option>
+						<option value="Option 3">Objets</option>
+					</select>
+				</div>
+				<div class="dash"></div>
+				<input type="submit" id="valider" value="Valider">
+			</form>
 		</div>
 	</div>
 	<div id="modale">

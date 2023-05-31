@@ -20,6 +20,9 @@ const xmark2 = document.getElementById("xmar2");
 const photoEdit = document.querySelector(".photo-edit");
 const addPhoto = document.getElementById("ajout-photo");
 const leftArrow = document.getElementById("left-arrow");
+const btnFile = document.getElementById("file-btn");
+const file = document.getElementById("file");
+let formUpload = document.forms.namedItem("formFile");
 let loginNavBtn = document.getElementById("login-nav-btn");
 let obj = [];
 let app = [];
@@ -90,7 +93,6 @@ if (user){
             const workId = div.getAttribute('data-value');
             const userDataSrting = localStorage.getItem("user");
             const userData = JSON.parse(userDataSrting)
-            console.log(userData.token)
             fetch('http://localhost:5678/api/works/' + workId, {
               method : "DELETE",
               headers : {
@@ -100,17 +102,55 @@ if (user){
             .then (response => {
               if(response.ok){
                 console.log(response)
+                return false
               }
             })
             .catch(error => {
               console.log(error)
             })
-            return false;
           })
         })
       })
     })
   })
+  formUpload.addEventListener("submit", () =>{
+    const userDataSrting = localStorage.getItem("user");
+    const userData = JSON.parse(userDataSrting)
+    event.preventDefault();
+
+    const title = document.getElementById('ajout-title').value;
+    const imageFile = document.getElementById('file').files[0];
+    const category = document.getElementById('categorie').value;
+    const data = {
+      title: title,
+      imageUrl: '',
+      categoryId: category,
+      userId: 0
+    };
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('categoryId', data.categoryId);
+    formData.append('image', imageFile);
+  
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers : {
+        'Authorization' : 'Bearer ' + userData.token,
+        'Content-Type': 'multipart/form-data'
+      },
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Traiter la réponse de l'API ici
+      console.log(data);
+    })
+    .catch(error => {
+      // Gérer les erreurs de la requête
+      console.error(error);
+    });
+  });
+  
   xmark.addEventListener("click", () => {
     modalePopUp.style.display = "none";
   })
@@ -129,6 +169,9 @@ if (user){
   addPhoto.addEventListener("click", () => {
     popUpAjout.style.display = "flex";
     popUp.style.display = "none";
+  })
+  btnFile.addEventListener("click", () => {
+    file.click();
   })
 }
 loginNavBtn.addEventListener("click", () => {
