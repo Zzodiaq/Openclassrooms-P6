@@ -363,11 +363,11 @@ footer nav ul {
 	position: relative;
 	background-color: white;
 	border-radius: 15px;
-	height: 82vh; /* Hauteur souhaitée pour la div popUp */
-	width: 35%; /* Largeur souhaitée pour la div popUp */
-	max-width: 800px; /* Largeur maximale pour la div popUp */
-	max-height: 90%; /* Hauteur maximale pour la div popUp */
-	overflow: auto; /* Ajouter une barre de défilement si le contenu dépasse */
+	height: 82vh;
+	width: 35%;
+	max-width: 800px;
+	max-height: 90%; 
+	overflow: auto; 
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -460,11 +460,15 @@ footer nav ul {
 	position: relative;
 	background-color: white;
 	border-radius: 15px;
-	height: 82vh; /* Hauteur souhaitée pour la div popUp */
-	width: 35%; /* Largeur souhaitée pour la div popUp */
-	max-width: 800px; /* Largeur maximale pour la div popUp */
-	max-height: 90%; /* Hauteur maximale pour la div popUp */
-	overflow: auto; /* Ajouter une barre de défilement si le contenu dépasse */
+	 /* Hauteur souhaitée pour la div popUp */
+	height: 82vh;
+	/* Largeur souhaitée pour la div popUp */
+	width: 35%; 
+	/* Largeur maximale pour la div popUp */
+	max-width: 800px; 
+	/* Hauteur maximale pour la div popUp */
+	max-height: 90%; 
+	overflow: auto;
 	display: none;
 	gap: 3rem;
 	flex-direction: column;
@@ -520,7 +524,7 @@ input:active {
 #ajout-title {
 	padding: 0 0 0 1rem;
 	border: none;
-	width: 100%;
+	width: 97%;
 	height: 50px;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -533,7 +537,7 @@ input:active {
 }
 
 #categorie {
-	padding: 0 0 0 1rem;
+	padding: 0 1rem;
 	border: none;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	width: 100%;
@@ -556,7 +560,7 @@ input:active {
 #upload-form{
 	display: flex;
 	flex-direction: column;
-	gap: 3rem;
+	gap: 2rem;
 	width: 600px;
 	align-items: center;
 }

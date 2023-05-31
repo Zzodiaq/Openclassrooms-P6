@@ -117,36 +117,29 @@ if (user){
     const userDataSrting = localStorage.getItem("user");
     const userData = JSON.parse(userDataSrting)
     event.preventDefault();
-
+    
     const title = document.getElementById('ajout-title').value;
     const imageFile = document.getElementById('file').files[0];
     const category = document.getElementById('categorie').value;
-    const data = {
-      title: title,
-      imageUrl: '',
-      categoryId: category,
-      userId: 0
-    };
-    const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('categoryId', data.categoryId);
+    var formData = new FormData();
+
+    formData.append('title', title);
+    formData.append('category', Number(category));
     formData.append('image', imageFile);
-  
+    formData.append('UserId', 1);
+
     fetch("http://localhost:5678/api/works", {
       method: "POST",
       headers : {
         'Authorization' : 'Bearer ' + userData.token,
-        'Content-Type': 'multipart/form-data'
       },
       body: formData
     })
     .then(response => response.json())
     .then(data => {
-      // Traiter la réponse de l'API ici
       console.log(data);
     })
     .catch(error => {
-      // Gérer les erreurs de la requête
       console.error(error);
     });
   });
@@ -183,6 +176,7 @@ loginNavBtn.addEventListener("click", () => {
 fetch('http://localhost:5678/api/works')
   .then(response => response.json())
   .then(data => {
+    console.log(data)
     for(let h = 0; h < data.length; h++){
       let name = (data[h].category.name);
       if (name === "Objets"){
