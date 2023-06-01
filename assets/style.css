@@ -359,6 +359,11 @@ footer nav ul {
 	background-color: rgba(0, 0, 0, 0.6);
 }
 
+#modale-popUp h2 {
+	font-family: 'Work Sans' ;
+	color: black;
+}
+
 #popUp {
 	position: relative;
 	background-color: white;
@@ -461,14 +466,14 @@ footer nav ul {
 	background-color: white;
 	border-radius: 15px;
 	 /* Hauteur souhaitée pour la div popUp */
-	height: 82vh;
+	height: 75vh;
 	/* Largeur souhaitée pour la div popUp */
 	width: 35%; 
 	/* Largeur maximale pour la div popUp */
 	max-width: 800px; 
 	/* Hauteur maximale pour la div popUp */
 	max-height: 90%; 
-	overflow: auto;
+	/* overflow: auto; */
 	display: none;
 	gap: 3rem;
 	flex-direction: column;
@@ -483,7 +488,7 @@ footer nav ul {
 	left: 3rem;
 }
 
-.upload {
+#upload {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -492,6 +497,10 @@ footer nav ul {
 	background-color: #E8F1F7;
 	width: 85%;
 	height: 300px;
+}
+
+.landscape {
+	color: #B9C5CC;
 }
 
 #file {
@@ -504,6 +513,12 @@ footer nav ul {
 	position: relative;
 	border-radius: 20px;
 	padding: 1rem 3rem;
+}
+
+#file-btn p {
+	color: #306685;
+	font-size: 15px;
+	font-weight: bold;
 }
 
 .title {
@@ -536,8 +551,17 @@ input:active {
 	width: 85%;
 }
 
+select {
+	appearance: none;
+	padding-left: 1rem;
+	padding-right: 20px;
+	background-image: url("icons/arrow.png");
+	background-repeat: no-repeat;
+	background-position: calc(100% - 10px) center;
+	background-size: 50px;
+}
+
 #categorie {
-	padding: 0 1rem;
 	border: none;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	width: 100%;

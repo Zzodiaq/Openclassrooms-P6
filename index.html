@@ -28,8 +28,8 @@
 			<i id="xmar2" class="fa-sharp fa-solid fa-xmark fa-2xl"></i>
 			<h2>Ajout photo</h2>
 			<form action="#"  name="formFile" enctype="multipart/form-data" method="post" id="upload-form">
-				<div class="upload">
-					<i class="fa-regular fa-image fa-8x"></i>
+				<div id="upload">
+					<i class="fa-regular fa-image fa-8x landscape"></i>
 					<span id="file-btn">
 						<p>+ Ajouter photo</p>
 						<input id="file" name="file" type="file" >
@@ -38,7 +38,7 @@
 				</div>
 				<div class="title">
 					<h3>Titre</h3>
-					<input id="ajout-title" name="titre" type="text" required>
+					<input id="ajout-title" name="titre" type="text" autocomplete="off" required>
 				</div>
 				<div class="catego">
 					<h3>Catégorie</h3>

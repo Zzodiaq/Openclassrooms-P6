@@ -22,6 +22,9 @@ const addPhoto = document.getElementById("ajout-photo");
 const leftArrow = document.getElementById("left-arrow");
 const btnFile = document.getElementById("file-btn");
 const file = document.getElementById("file");
+const upload = document.getElementById("upload");
+const title = document.getElementById('ajout-title');
+const category = document.getElementById('categorie');
 let formUpload = document.forms.namedItem("formFile");
 let loginNavBtn = document.getElementById("login-nav-btn");
 let obj = [];
@@ -118,14 +121,14 @@ if (user){
     const userData = JSON.parse(userDataSrting)
     event.preventDefault();
     
-    const title = document.getElementById('ajout-title').value;
-    const imageFile = document.getElementById('file').files[0];
-    const category = document.getElementById('categorie').value;
-    var formData = new FormData();
+    const titleValue = title.value;
+    const fileValue = file.files[0];
+    const categoryValue = category.value;
+    let formData = new FormData();
 
-    formData.append('title', title);
-    formData.append('category', Number(category));
-    formData.append('image', imageFile);
+    formData.append('title', titleValue);
+    formData.append('category', Number(categoryValue));
+    formData.append('image', fileValue);
     formData.append('UserId', 1);
 
     fetch("http://localhost:5678/api/works", {
@@ -144,18 +147,34 @@ if (user){
     });
   });
   
+  file.addEventListener('change', (e) => {
+    let enfant = upload.children;
+    Array.from(enfant).forEach(function(en) {
+      en.style.display = 'none';
+    });
+    let selectedFile = e.target.files[0];
+    let image = document.createElement('img');
+    image.src = URL.createObjectURL(selectedFile)
+    image.setAttribute('style', 'width: 224px');
+    upload.appendChild(image);
+  })
+
   xmark.addEventListener("click", () => {
+    removePreloadImg();
     modalePopUp.style.display = "none";
   })
   xmark2.addEventListener("click", () => {
+    removePreloadImg();
     modalePopUp.style.display = "none";
   })
   leftArrow.addEventListener("click", () => {
+    removePreloadImg();
     popUpAjout.style.display = "none";
     popUp.style.display = "flex";
   })
   modalePopUp.addEventListener("click", () => {
     if (event.target === modalePopUp){
+      removePreloadImg();
       modalePopUp.style.display = "none"
     }
   })
@@ -266,4 +285,18 @@ function empty2() {
   while(photoEdit.firstChild){
     photoEdit.removeChild(photoEdit.firstChild)
   }
+}
+
+function removePreloadImg(){
+  title.value = '';
+  category.value = '';
+  file.value = '';
+  let enfant = upload.children;
+  Array.from(enfant).forEach(function(en) {
+    if(en.nodeName === "IMG"){
+      upload.removeChild(en);
+    }else{
+      en.style.display = 'block';
+    }
+  });
 }
