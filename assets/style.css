@@ -368,7 +368,7 @@ footer nav ul {
 	position: relative;
 	background-color: white;
 	border-radius: 15px;
-	height: 82vh;
+	height: fit-content;
 	width: 35%;
 	max-width: 800px;
 	max-height: 90%; 
@@ -574,7 +574,7 @@ select {
 	padding: 0.8rem 7rem;
 	border-radius: 20px;
 	background-color: grey;
-	border: grey 2px solid;
+	border: none;
 	color: white;
 	cursor: pointer;
 	font-family: 'Syne';

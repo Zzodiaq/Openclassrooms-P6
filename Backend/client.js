@@ -25,12 +25,16 @@ const file = document.getElementById("file");
 const upload = document.getElementById("upload");
 const title = document.getElementById('ajout-title');
 const category = document.getElementById('categorie');
+const valider = document.getElementById("valider");
+const deleteGalery = document.getElementById("delete-gallery");
 let formUpload = document.forms.namedItem("formFile");
 let loginNavBtn = document.getElementById("login-nav-btn");
 let obj = [];
 let app = [];
 let hot = [];
 const user = localStorage.getItem("user");
+
+
 if (user){
   loginNavBtn.innerHTML = "logout";
   modale.style.display = "flex";
@@ -89,9 +93,33 @@ if (user){
               photoEdit.appendChild(figure);
             }
         }
+        
+        deleteGalery.addEventListener("click", (event) => {
+          event.preventDefault();
+          let divTrashSelect = document.querySelectorAll('.trash');
+          const userDataSrting = localStorage.getItem("user");
+          const userData = JSON.parse(userDataSrting)
+          divTrashSelect.forEach(e => {
+            const works = e.getAttribute('data-value');
+            fetch('http://localhost:5678/api/works/' + works, {
+              method : "DELETE",
+              headers : {
+                'Authorization' : 'Bearer ' + userData.token
+              }
+            })
+            .then (response => {
+              if(response.ok){
+                console.log(response)
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          });
+        })
         const trash = document.querySelectorAll(".trash");
         trash.forEach((div) => {
-          div.addEventListener("click", () => {
+          div.addEventListener("click", (event) => {
             event.preventDefault();
             const workId = div.getAttribute('data-value');
             const userDataSrting = localStorage.getItem("user");
@@ -105,7 +133,6 @@ if (user){
             .then (response => {
               if(response.ok){
                 console.log(response)
-                return false
               }
             })
             .catch(error => {
@@ -116,7 +143,7 @@ if (user){
       })
     })
   })
-  formUpload.addEventListener("submit", () =>{
+  formUpload.addEventListener("submit", (event) =>{
     const userDataSrting = localStorage.getItem("user");
     const userData = JSON.parse(userDataSrting)
     event.preventDefault();
@@ -148,6 +175,7 @@ if (user){
   });
   
   file.addEventListener('change', (e) => {
+    valider.setAttribute('style', 'background-color: #1D6154');
     let enfant = upload.children;
     Array.from(enfant).forEach(function(en) {
       en.style.display = 'none';
@@ -248,7 +276,7 @@ fetch('http://localhost:5678/api/works')
   })
   .catch(error => console.error(error))
 
-log_form.addEventListener('submit', () => {
+log_form.addEventListener('submit', (event) => {
   event.preventDefault();
   const mdp = document.getElementById("password").value;
   const email = document.getElementById("email").value;
@@ -288,6 +316,7 @@ function empty2() {
 }
 
 function removePreloadImg(){
+  valider.setAttribute('style', 'background-color: grey');
   title.value = '';
   category.value = '';
   file.value = '';
