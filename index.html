@@ -21,13 +21,15 @@
 			</div>
 			<div class="dash"></div>
 			<button id="ajout-photo">Ajouter une photo</button>
-			<button id="delete-gallery">Supprimer la galerie</button>
+			<form name="formdelgal" enctype="multipart/form-data" method="post" id="formDeleteGalerie">
+				<button id="delete-gallery" type="submit">Supprimer la galerie</button>
+			</form>
 		</div>
 		<div id="popUp-ajout">
 			<i id="left-arrow" class="fa fa-2xl fa-light fa-arrow-left"></i>
 			<i id="xmar2" class="fa-sharp fa-solid fa-xmark fa-2xl"></i>
 			<h2>Ajout photo</h2>
-			<form action=""  name="formFile" enctype="multipart/form-data" method="post" id="upload-form">
+			<form name="formFile" enctype="multipart/form-data" method="post" id="upload-form">
 				<div id="upload"> 
 					<i class="fa-regular fa-image fa-8x landscape"></i>
 					<span id="file-btn">
@@ -124,7 +126,7 @@
 </main>
 
 <footer>
-	<script type="module" src="Backend/client.js"></script>
+	<script src="index.js" type="module"></script>
 	<script type="module" src="Backend/app.js"></script>
 	<nav>
 		<ul>
